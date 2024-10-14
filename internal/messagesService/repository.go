@@ -1,7 +1,6 @@
 package messagesService
 
 import (
-
 	"gorm.io/gorm"
 )
 

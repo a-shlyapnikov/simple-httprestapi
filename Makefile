@@ -13,3 +13,6 @@ migrate-down:
 
 run:
 	go run cmd/app/main.go
+
+gen:
+	oapi-codegen -package messages -config openapi/.openapi -include-tags messages  openapi/openapi.yaml > ./internal/web/messages/api.gen.go
