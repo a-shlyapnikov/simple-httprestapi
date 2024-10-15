@@ -13,7 +13,9 @@ import (
 
 func main() {
 	database.InitDB()
-	database.DB.AutoMigrate(&messagesService.Message{})
+	if err := database.DB.AutoMigrate(&messagesService.Message{}); err != nil{
+		log.Fatalf("Auto migration failed: %v",err)
+	}
 
 	repo := messagesService.NewMessageRepository(database.DB)
 	service := messagesService.NewService(repo)
@@ -32,11 +34,4 @@ func main() {
 		log.Fatalf("failed to start with err: %v", err)
 	}
 
-	// router := mux.NewRouter()
-	// router.HandleFunc("/api/get", handler.GetMessagesHandler).Methods("GET")
-	// router.HandleFunc("/api/post", handler.PostMessageHandler).Methods("POST")
-	// router.HandleFunc("/api/messages/{id}", handler.UpdateMessageHandler).Methods("PATCH")
-	// router.HandleFunc("/api/messages/{id}", handler.DeleteMessageHandler).Methods("DELETE")
-
-	// http.ListenAndServe(":8080", router)
 }
